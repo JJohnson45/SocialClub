@@ -114,6 +114,7 @@ class App extends React.Component {
         currentUsername: googleUser.profileObj.name,
         googleUser: googleUser
       })
+      
     }
     
     //navbar css

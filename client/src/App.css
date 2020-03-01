@@ -174,9 +174,9 @@ body {
      .data{
       display: none;
       margin: 40px;
-    }.col-sm-4{
-      text-align: center;
-      max-width: 500px;
+    }.col-sm-4 {
+  text-align: center;
+  max-width: 500px;
 	padding: 10px 20px;
 	background: #f4f7f8;
 	margin: 10px auto;
@@ -188,6 +188,7 @@ body {
     }.img-circle{
       margin: 0 575px 5px 
     }.emailAddy{
+      text-align: center;
       font-family: Georgia, "Times New Roman", Times, serif;
 	background: rgba(255,255,255,.1);
 	border: none;
