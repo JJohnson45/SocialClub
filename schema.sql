@@ -18,7 +18,7 @@ CREATE TABLE `events` (
   `time` varchar(20),
   `category_id` int,
   `category` varchar(20),
-  `location` varchar(50),
+  `address` varchar(50),
   `creator_id` int,
   `summary` varchar(244),
   `roomID` varchar(20)
@@ -29,23 +29,20 @@ CREATE TABLE `status` (
   `status` varchar(20)
 );
 
-CREATE TABLE `rsvp_status` (
-  `eventid` int,
-  `userid` int,
-  `status` int
+CREATE TABLE rsvp (
+  user_id int(10) NOT NULL,
+  event_id int(10) NOT NULL,
+  PRIMARY KEY (user_id,event_id),
+  CONSTRAINT FK_users FOREIGN KEY (user_id) REFERENCES users (id),
+  CONSTRAINT FK_events FOREIGN KEY (event_id) REFERENCES  events(id)
 );
 
 CREATE TABLE `categories` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `category` varchar(20)
+  `category` varchar(20),
+  `id` int PRIMARY KEY AUTO_INCREMENT
 );
 
 
 
 ALTER TABLE `events` ADD FOREIGN KEY (`creator_id`) REFERENCES `users` (`id`);
 
-ALTER TABLE `rsvp_status` ADD FOREIGN KEY (`userid`) REFERENCES `users` (`id`);
-
-ALTER TABLE `rsvp_status` ADD FOREIGN KEY (`eventid`) REFERENCES `events` (`id`);
-
-ALTER TABLE `rsvp_status` ADD FOREIGN KEY (`status`) REFERENCES `categories` (`id`);

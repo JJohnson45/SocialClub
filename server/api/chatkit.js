@@ -14,11 +14,11 @@ chatkit.createUser({
         id: req.body.id,
         name: req.body.name,
       })
-      .then(reply => {
+      .then(res => {
           res.send(reply)
       })
       .catch(err => {
-          console.log(err)
+          res.send(err)
       })
 })
 

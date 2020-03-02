@@ -10,7 +10,13 @@ class UserEvents extends Component {
 
         return (
             <div>
-                Hello World
+                <ul>
+                    {this.props.events.map( event => (
+                        <li key={event.id} id={event.id} onClick={this.props.handleClick}>
+                            {event.name}
+                        </li>
+                    ))}
+                </ul>
             </div>
         )
     }

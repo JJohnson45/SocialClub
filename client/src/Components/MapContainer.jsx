@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Map, GoogleApiWrapper, Marker, InfoWindow} from 'google-maps-react';
 import { GOOGLE_TOKEN } from './googleConfig'
-// import Marker from './Marker';
+import axios from 'axios'
 
 class MapContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      events: props.events || [],
+      events: [],
       eventCords: {},
       showingInfoWindow: false,
       activeMarker: {},
@@ -21,8 +21,21 @@ class MapContainer extends Component {
     this.onMapClicked = this.onMapClicked.bind(this);
     this.handleJoinClick = this.handleJoinClick.bind(this);
     this.handleViewClick = this.handleViewClick.bind(this);
+    this.getAllEvents = this.getAllEvents.bind(this);
+  }
 
-    this.loadCords();
+  componentDidMount() {
+    this.getAllEvents();
+  }
+
+  getAllEvents() {
+    axios.get('api/db/events')
+      .then((events) => {
+        this.setState({
+          events: events.data,
+        })
+        this.loadCords();
+      })
   }
 
   convertAddress(address) {
@@ -74,15 +87,23 @@ class MapContainer extends Component {
   };
 
   handleJoinClick() {
-    console.log("JOIN")
+    axios.post('api/db/rsvp', {eventId: this.state.activeMarker.id, userId: this.props.userid})
+    .then((joinStatus) => {
+      console.log(joinStatus)
+      if(joinStatus.data === true){
+        alert("JOINED EVENT");
+      }else{
+        alert("There was an error joining this event you might have already joined or dont have permission");
+      }
+    })
   }
 
-  handleViewClick() {
-    console.log("View")
+  handleViewClick(eventId) {
+    this.props.viewSummary(eventId);
   }
 
   onInfoWindowOpen(props, e) {
-    const { selectedPlace } = this.state;
+    const { selectedPlace, activeMarker } = this.state;
     const infoWindow = (
       <div>
         <h3>{selectedPlace.name}</h3>
@@ -91,7 +112,7 @@ class MapContainer extends Component {
         <p>Category: {selectedPlace.category}</p>
         <p>Summary: {selectedPlace.summary}</p>
         <button onClick={this.handleJoinClick}>JOIN</button>
-        <button onClick={this.handleViewClick}>VIEW EVENT</button>
+        <button onClick={() => {this.handleViewClick({target:{id: activeMarker.id}})}}>VIEW EVENT</button>
       </div>);
     ReactDOM.render(React.Children.only(infoWindow), document.getElementById("iwc"));
   }
@@ -99,7 +120,7 @@ class MapContainer extends Component {
   render() {
     const styles = {
       map: {
-        margin:'50px',
+        margin:'15px',
         position: 'absolute',
         top: '50px'
       }
@@ -119,7 +140,7 @@ class MapContainer extends Component {
           disableDefaultUI={true}
           onClick={this.onMapClicked}
         >
-          {this.state.events.map(event => <Marker address={event.address} time={event.time} category={event.category} summary={event.summary} name={event.name} onClick={this.onMarkerClick} key={event.id} position={eventCords[event.id]}/>)}
+          {this.state.events.map(event => <Marker id={event.id} address={event.address} time={event.time} category={event.category} summary={event.summary} name={event.name} onClick={this.onMarkerClick} key={event.id} position={eventCords[event.id]}/>)}
           <InfoWindow
               marker={activeMarker}
               visible={showingInfoWindow}

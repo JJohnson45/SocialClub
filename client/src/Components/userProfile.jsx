@@ -9,6 +9,12 @@ class UserProfile extends Component {
     }
     //this.signOut = this.signOut.bind(this)
   }
+
+  componentDidMount(){
+    this.props.postUser()
+    this.props.getUser()
+    this.props.getUserEvents()
+  }
   
   render (){
     // let appView = '';
