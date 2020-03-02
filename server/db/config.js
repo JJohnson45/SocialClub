@@ -3,5 +3,7 @@ module.exports = {
     user: 'root',
     password: '',
     database: 'socialclub',
-    port: '8080'
+    //logbin: mysql-bin.log
+    
 };
+// logbin = mysql-bin.log

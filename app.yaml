@@ -4,7 +4,9 @@ instance_class: F2
 
 env_variables:
   BUCKET_NAME: "greenfield-socialclub.appspot.com"
-
+  MYSQL_DSN: mysql:unix_socket=/cloudql/thermal-antenna-269819:us-central1:socialclub-mysql;dbname=socialclub
+  MYSQL-USER: ReversedOreo
+  MYSQL_PASSWORD: Oreo
 handlers:
 - url: /
   static_files: client/dist/index.html
@@ -14,3 +16,5 @@ handlers:
   secure: always
   redirect_http_response_code: 301
   script: auto
+
+  

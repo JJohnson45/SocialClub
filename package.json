@@ -38,6 +38,8 @@
     "webpack-dev-server": "^3.10.3"
   },
   "dependencies": {
+    "@google-cloud/datastore": "^5.0.6",
+    "@google-cloud/storage": "^4.3.1",
     "@pusher/chatkit-client": "^1.13.4",
     "@pusher/chatkit-server": "^2.4.0",
     "axios": "^0.19.2",
@@ -45,6 +47,7 @@
     "file-system": "^2.2.2",
     "google-maps-react": "^2.0.2",
     "mysql": "^2.18.1",
+    "mysql-server-5.6-osx-x64": "^5.6.24002",
     "react": "0.0.0-d28bd2994",
     "react-dom": "0.0.0-d28bd2994",
     "react-google-login": "^5.1.1",

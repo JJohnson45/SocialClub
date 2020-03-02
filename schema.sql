@@ -7,13 +7,15 @@ CREATE DATABASE socialclub;
 USE socialclub;
 
 CREATE TABLE `users` (
-  `id` int PRIMARY KEY AUTO_INCREMENT
+  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `name` varchar(20) ,
+  `email` varchar(40) UNIQUE
 ); 
 
 CREATE TABLE `events` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `name` varchar(20),
-  `time` date,
+  `time` varchar(20),
   `category_id` int,
   `category` varchar(20),
   `location` varchar(50),

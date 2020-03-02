@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 //import { hot } from "react-hot-loader";
-import MapContainer from "./components/MapContainer"
+import MapContainer from "./Components/MapContainer"
 import axios from 'axios'
 import  { onSignIn } from "../dist/script"
 //Topbar Menu imports
@@ -16,6 +16,8 @@ import UserProfile from './Components/userProfile';
 import GoogleLogin  from "react-google-login"
 import CreateEvent from "./CreateEvent";
 import Home from "./Components/Home"
+import UserEvents from "./Components/UserEvents";
+import AttendingEvents from "./Components/AttendingEvents";
 
 
 class App extends React.Component {
@@ -34,19 +36,38 @@ class App extends React.Component {
     this.createUser = this.createUser.bind(this);
     //this.signOut = this.signOut.bind(this)
     this.createEvent = this.createEvent.bind(this)
+    this.getUserEvents = this.getUserEvents.bind(this);
+    this.postUser = this.postUser.bind(this);
   }
 
+//create event button on click changes appView
   createEvent () {
     this.setState({
       appView: 'CreateEvent'
     })
   }
-  // changes chat view
-  // userProfile() {
-  //   this.setState({
-  //     appView: 'UserProfile'
-  //   })
-  // }
+
+  postUser () {
+
+    axios({
+      method: 'post',
+      url: `api/db/users/`,
+      data: {
+        username: this.state.currentUsername,
+        email: this.state.googleUser.profileObj.email
+      }
+  })
+}
+
+  getUserEvents () {
+    console.log('getEvents')
+    axios({
+      method: 'get',
+      url: `api/db/events/${this.state.currentUsername}`,
+    }).then()
+  }
+
+
 
   changeView(view) {
     this.setState({
@@ -109,12 +130,13 @@ class App extends React.Component {
     //
     const onSignIn = (googleUser) => {
       console.log(googleUser, "settingstate");
-       this.setState({
-         appView: 'Profile Page',
+      this.setState({
+        appView: 'Profile Page',
         currentUsername: googleUser.profileObj.name,
         googleUser: googleUser
       })
-      
+      this.postUser()
+      // this.getUserEvents()
     }
     
     //navbar css
@@ -174,6 +196,12 @@ class App extends React.Component {
     let appView = '';
     if (this.state.appView === 'Home') {
       appView = <Home handleClick={this.createEvent} />
+    } else if (this.state.appView === 'CreateEvent'){
+      appView = <CreateEvent currentUser={this.state.currentUsername} />
+    } else if (this.state.appView === 'Created Events'){
+      appView = <UserEvents />
+    } else if (this.state.appView === 'RSVP\'d Events') {
+      appView = <AttendingEvents />
     } 
     else if (this.state.appView === 'Profile Page') {
       appView = <UserProfile user = {this.state.googleUser} userName = {this.state.currentUsername}></UserProfile>

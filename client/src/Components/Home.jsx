@@ -15,7 +15,7 @@ class Home extends Component {
           }
         return (
             <div>
-            <MapContainer />
+            <MapContainer events={[{address: "new york", id: 1}, {address: "new orleans", id: 2}]}/>
             <button type="button" className="btn btn-primary" type="button" style={styles.button} onClick={this.props.handleClick}>Create an event!</button>
             </div>
         )

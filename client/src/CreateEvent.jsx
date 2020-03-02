@@ -36,8 +36,7 @@ class CreateEvent extends React.Component {
               roomId: name,
             }
     })
-    .then( () => {
-        console.log('added')
+
         axios({
             method: 'post',
             url: 'api/chatkit/rooms',
@@ -47,10 +46,8 @@ class CreateEvent extends React.Component {
                 name: name,
             }
     })
-    .then( () => console.log('Room created'))
-})
-    .catch(err => console.log(err));
 }
+
 
     handleName(event){
         this.setState({name: event.target.value})
