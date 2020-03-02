@@ -213,7 +213,7 @@ class App extends React.Component {
       <div>
         <div className="g-signin2">
           <GoogleLogin
-            clientId="870155244088-hav8sg0oo71s181ghhetvqdgrssuo8ln.apps.googleusercontent.com"
+            clientId="1028880028767-57akljrnhhip255lnmhvr04vrgg8giq0.apps.googleusercontent.com"
             buttonText="Login"
             onSuccess={onSignIn}
             onFailure={responseGoogle}

@@ -1,4 +1,4 @@
-const mysql = require('mysql-server-5.6-osx-x64');
+const mysql = require('mysql');
 const util = require('util');
 const mysqlConfig = require('./config');
 
